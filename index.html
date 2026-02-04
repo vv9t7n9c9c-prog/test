@@ -1,49 +1,60 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Caisse LTD</title>
+    <title>LTD Portolina - Caisse</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- CONNEXION -->
-<div id="login" class="card">
-    <h2>Connexion LTD</h2>
-    <input id="loginId" placeholder="ID joueur">
+<!-- PAGE CONNEXION -->
+<div id="login" class="login-container">
+    <img src="logo.png" class="logo">
+    <h1>LTD Portolina</h1>
+    <p class="subtitle">Système de caisse interne</p>
+
+    <input id="loginId" placeholder="Identifiant">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
     <button onclick="login()">Connexion</button>
 </div>
 
 <!-- PANEL DIRECTION -->
-<div id="admin" class="card hidden">
-    <h2>Direction LTD</h2>
+<div id="admin" class="admin-panel hidden">
+    <header>
+        <img src="logo.png">
+        <h2>Direction LTD</h2>
+        <button onclick="logout()">Déconnexion</button>
+    </header>
 
-    <input id="newId" placeholder="ID joueur employé">
-    <input id="newPrenom" placeholder="Prénom">
-    <input id="newNom" placeholder="Nom">
-    <input id="newPassword" placeholder="Mot de passe">
-    <button onclick="createEmployee()">Créer employé</button>
+    <section class="admin-content">
+        <h3>Créer un employé</h3>
+        <input id="newId" placeholder="ID joueur">
+        <input id="newPrenom" placeholder="Prénom">
+        <input id="newNom" placeholder="Nom">
+        <input id="newPassword" placeholder="Mot de passe">
+        <button onclick="createEmployee()">Créer</button>
 
-    <ul id="employeeList"></ul>
-
-    <button class="logout" onclick="logout()">Déconnexion</button>
+        <h3>Employés enregistrés</h3>
+        <ul id="employeeList"></ul>
+    </section>
 </div>
 
 <!-- CAISSE -->
 <div id="caisse" class="caisse hidden">
     <aside class="sidebar">
-        <h3 id="employeeName"></h3>
-        <button onclick="showCategory('boisson')">Boissons</button>
-        <button onclick="showCategory('repas')">Repas</button>
-        <button onclick="showCategory('alcool')">Alcool</button>
-        <button onclick="showCategory('soft')">Soft</button>
+        <img src="logo.png" class="sidebar-logo">
+        <p id="employeeName"></p>
+
+        <button onclick="showCategory('boisson')">🥤 Boissons</button>
+        <button onclick="showCategory('repas')">🍔 Repas</button>
+        <button onclick="showCategory('alcool')">🍺 Alcool</button>
+        <button onclick="showCategory('soft')">🥤 Soft</button>
+
         <button class="logout" onclick="logout()">Quitter</button>
     </aside>
 
     <main class="products">
-        <h2 id="categoryTitle">Produits</h2>
+        <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
         <div id="productList"></div>
     </main>
 
