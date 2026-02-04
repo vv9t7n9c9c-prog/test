@@ -1,131 +1,65 @@
+/* ===== GLOBAL ===== */
 body {
     margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-    color: #ecf0f1;
+    font-family: 'Segoe UI', sans-serif;
+    background: #1b1b1b;
+    color: #f0f0f0;
 }
 
 .hidden { display: none; }
 
-/* LOGIN */
-.login-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo {
-    width: 120px;
-    margin-bottom: 15px;
-}
-
-.subtitle {
-    color: #aaa;
-    margin-bottom: 20px;
-}
-
-.login-container input {
-    width: 260px;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 6px;
-    border: none;
-}
-
-.login-container button {
-    width: 260px;
-    padding: 12px;
-    margin-top: 10px;
-    background: #2ecc71;
-    border: none;
-    font-weight: bold;
+button {
     cursor: pointer;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    background: #ff9800;
+    color: #fff;
+    margin-top: 5px;
+    transition: 0.2s;
 }
 
-/* ADMIN */
-.admin-panel header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #1e8449;
-    padding: 15px;
-}
+button:hover { background: #e68900; }
 
-.admin-panel header img {
-    width: 50px;
-}
-
-.admin-content {
-    padding: 20px;
-}
-
-.admin-content input {
+input {
     display: block;
-    width: 300px;
-    padding: 8px;
+    width: 100%;
     margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
 }
 
-/* CAISSE */
-.caisse {
-    display: flex;
-    height: 100vh;
-}
+h1, h2, h3, h4 { margin: 10px 0; }
 
-.sidebar {
-    width: 20%;
-    background: #111;
-    padding: 20px;
+/* ===== LOGIN ===== */
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #292929;
+    border-radius: 15px;
     text-align: center;
 }
 
-.sidebar-logo {
-    width: 80px;
-    margin-bottom: 10px;
-}
+.login-container .logo { width: 100px; margin-bottom: 20px; }
 
-.sidebar button {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    background: #2ecc71;
-    border: none;
-    cursor: pointer;
-}
+/* ===== PANEL ADMIN ===== */
+.panel { padding: 20px; }
+header { display: flex; justify-content: space-between; align-items: center; }
+.admin-section { display: flex; gap: 20px; margin-top: 20px; }
+.card { background: #292929; padding: 20px; border-radius: 15px; flex: 1; }
 
-.products {
-    width: 50%;
-    padding: 20px;
-    overflow-y: auto;
+/* ===== CAISSE ===== */
+.caisse { display: flex; height: 100vh; }
+.sidebar {
+    width: 200px; background: #222; padding: 20px; display: flex;
+    flex-direction: column; gap: 10px; border-right: 2px solid #333;
 }
+.sidebar-logo { width: 100px; margin-bottom: 10px; }
 
-.product {
-    background: #2a2a2a;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 6px 0;
-    display: flex;
-    justify-content: space-between;
-}
+.products { flex: 1; padding: 20px; overflow-y: auto; }
+.cart { width: 250px; background: #292929; padding: 20px; border-left: 2px solid #333; }
 
-.product button {
-    background: #1e8449;
-    border: none;
-    padding: 6px 10px;
-}
-
-.cart {
-    width: 30%;
-    background: #0f0f0f;
-    padding: 20px;
-}
-
-.pay {
-    width: 100%;
-    padding: 12px;
-    background: #27ae60;
-    border: none;
-    margin-top: 10px;
-}
+.product { display: flex; justify-content: space-between; margin-bottom: 10px; background: #1e1e1e; padding: 10px; border-radius: 10px; }
+.total-box { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
