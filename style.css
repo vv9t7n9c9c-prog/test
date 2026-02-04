@@ -1,65 +1,116 @@
-/* ===== GLOBAL ===== */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #1b1b1b;
-    color: #f0f0f0;
+let users = JSON.parse(localStorage.getItem("ltd_users")) || [
+    {username:"direction.portolina", password:"portolina2026", role:"admin"}
+];
+let sales = [];
+let stock = { menu:50, boisson:50, plat:50, stup:20, soft:50 };
+
+let session = null;
+let cart = [];
+let cartCashier = [];
+let totalPrice = 0;
+let totalCashier = 0;
+
+const products = {
+    menu:[{name:"Menu Basique", price:20},{name:"Menu VIP", price:50}],
+    boisson:[{name:"Eau", price:5},{name:"Coca", price:8}],
+    plat:[{name:"Burger", price:15},{name:"Pizza", price:20}],
+    stup:[{name:"Substance X", price:100}],
+    soft:[{name:"Jus", price:6},{name:"Thé", price:5}]
+};
+
+document.getElementById("btnLogin").onclick = login;
+
+function login(){
+    const id = loginId.value.toLowerCase();
+    const pw = loginPassword.value;
+    const user = users.find(u=>u.username===id && u.password===pw);
+    if(!user) return alert("Erreur de connexion");
+    session = user;
+    login.classList.add("hidden");
+    user.role==="admin" ? direction.classList.remove("hidden") : cashier.classList.remove("hidden");
 }
 
-.hidden { display: none; }
-
-button {
-    cursor: pointer;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    background: #ff9800;
-    color: #fff;
-    margin-top: 5px;
-    transition: 0.2s;
+function logout(){
+    session=null;
+    cart=[]; cartCashier=[];
+    totalPrice=0; totalCashier=0;
+    updateCart(); updateCartCashier();
+    login.classList.remove("hidden");
+    direction.classList.add("hidden");
+    cashier.classList.add("hidden");
 }
 
-button:hover { background: #e68900; }
-
-input {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
+function showCategory(cat){
+    categoryTitle.innerText = cat.toUpperCase();
+    productList.innerHTML="";
+    products[cat].forEach(p=>{
+        productList.innerHTML += `
+        <div class="product">
+            <span>${p.name} - ${p.price}$</span>
+            <button onclick="addToCart('${p.name}',${p.price})">+</button>
+        </div>`;
+    });
 }
 
-h1, h2, h3, h4 { margin: 10px 0; }
-
-/* ===== LOGIN ===== */
-.login-container {
-    max-width: 400px;
-    margin: 80px auto;
-    padding: 30px;
-    background: #292929;
-    border-radius: 15px;
-    text-align: center;
+function showCategoryCashier(cat){
+    categoryTitleCashier.innerText = cat.toUpperCase();
+    productListCashier.innerHTML="";
+    products[cat].forEach(p=>{
+        productListCashier.innerHTML += `
+        <div class="product">
+            <span>${p.name} - ${p.price}$</span>
+            <button onclick="addToCartCashier('${p.name}',${p.price})">+</button>
+        </div>`;
+    });
 }
 
-.login-container .logo { width: 100px; margin-bottom: 20px; }
-
-/* ===== PANEL ADMIN ===== */
-.panel { padding: 20px; }
-header { display: flex; justify-content: space-between; align-items: center; }
-.admin-section { display: flex; gap: 20px; margin-top: 20px; }
-.card { background: #292929; padding: 20px; border-radius: 15px; flex: 1; }
-
-/* ===== CAISSE ===== */
-.caisse { display: flex; height: 100vh; }
-.sidebar {
-    width: 200px; background: #222; padding: 20px; display: flex;
-    flex-direction: column; gap: 10px; border-right: 2px solid #333;
+function addToCart(name,price){
+    cart.push({name,price});
+    totalPrice+=price;
+    updateCart();
 }
-.sidebar-logo { width: 100px; margin-bottom: 10px; }
 
-.products { flex: 1; padding: 20px; overflow-y: auto; }
-.cart { width: 250px; background: #292929; padding: 20px; border-left: 2px solid #333; }
+function addToCartCashier(name,price){
+    cartCashier.push({name,price});
+    totalCashier+=price;
+    updateCartCashier();
+}
 
-.product { display: flex; justify-content: space-between; margin-bottom: 10px; background: #1e1e1e; padding: 10px; border-radius: 10px; }
-.total-box { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+function groupItems(list){
+    const grouped={};
+    list.forEach(i=>{
+        if(!grouped[i.name]) grouped[i.name]={qty:0, price:i.price};
+        grouped[i.name].qty++;
+    });
+    return grouped;
+}
+
+function updateCart(){
+    cartList.innerHTML="";
+    const g = groupItems(cart);
+    for(let name in g){
+        cartList.innerHTML += `<li>${name} x${g[name].qty}</li>`;
+    }
+    total.innerText = totalPrice;
+}
+
+function updateCartCashier(){
+    cartListCashier.innerHTML="";
+    const g = groupItems(cartCashier);
+    for(let name in g){
+        cartListCashier.innerHTML += `<li>${name} x${g[name].qty}</li>`;
+    }
+    totalCashier.innerText = totalCashier;
+}
+
+function pay(){
+    alert("Encaissement : "+totalPrice+"$");
+    cart=[]; totalPrice=0;
+    updateCart();
+}
+
+function payCashier(){
+    alert("Encaissement : "+totalCashier+"$");
+    cartCashier=[]; totalCashier=0;
+    updateCartCashier();
+}
