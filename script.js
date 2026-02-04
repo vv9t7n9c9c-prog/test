@@ -1,7 +1,10 @@
+/* UTILISATEURS (exemple) */
 const users = [
-    {user:"admin", pass:"1234"}
+    {name:"Jean Dupont", password:"1234"},
+    {name:"Marie Martin", password:"azerty"}
 ];
 
+/* PRODUITS */
 const products = {
     menu:[{name:"Menu Basique",price:20},{name:"Menu VIP",price:50}],
     boisson:[{name:"Eau",price:5},{name:"Coca",price:8}],
@@ -12,13 +15,13 @@ const products = {
 let cart=[];
 let total=0;
 
-/* LOGIN */
+/* CONNEXION */
 function login(){
-    const u = loginUser.value;
-    const p = loginPass.value;
+    const name = loginName.value.trim();
+    const pass = loginPassword.value.trim();
 
-    const ok = users.find(x=>x.user===u && x.pass===p);
-    if(!ok) return alert("Identifiants incorrects");
+    const user = users.find(u => u.name === name && u.password === pass);
+    if(!user) return alert("Nom ou mot de passe incorrect");
 
     loginScreen.classList.add("hidden");
     caisseApp.classList.remove("hidden");
@@ -60,7 +63,7 @@ function updateCart(){
     for(let n in grouped){
         cartList.innerHTML+=`<li>${n} x${grouped[n].q}</li>`;
     }
-    total.innerText=total;
+    document.getElementById("total").innerText = total;
 }
 
 function pay(){
