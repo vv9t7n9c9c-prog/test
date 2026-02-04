@@ -10,7 +10,7 @@ body{
 /* LOGIN */
 .login{
     max-width:360px;
-    margin:120px auto;
+    margin:140px auto;
     background:#292929;
     padding:30px;
     border-radius:18px;
@@ -19,8 +19,8 @@ body{
 
 .login input{
     width:100%;
-    padding:10px;
-    margin:8px 0;
+    padding:12px;
+    margin:10px 0;
     border:none;
     border-radius:8px;
 }
@@ -79,7 +79,7 @@ body{
 button{
     border:none;
     border-radius:8px;
-    padding:8px;
+    padding:10px;
     cursor:pointer;
     background:#ff9800;
     color:#fff;
