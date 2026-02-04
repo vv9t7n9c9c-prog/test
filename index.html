@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -7,42 +8,50 @@
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="login-box">
-    <h2>Connexion Employé LTD</h2>
+<!-- CONNEXION -->
+<div id="login" class="card">
+    <h2>Connexion LTD</h2>
+    <input id="loginId" placeholder="ID joueur">
+    <input id="loginPassword" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Connexion</button>
+</div>
 
-    <input type="text" id="playerId" placeholder="ID Joueur (unique)">
-    <input type="text" id="prenom" placeholder="Prénom">
-    <input type="text" id="nom" placeholder="Nom">
-    <input type="password" id="password" placeholder="Mot de passe">
+<!-- PANEL DIRECTION -->
+<div id="admin" class="card hidden">
+    <h2>Direction LTD</h2>
 
-    <button onclick="register()">Créer un compte</button>
-    <button onclick="login()">Se connecter</button>
+    <input id="newId" placeholder="ID joueur employé">
+    <input id="newPrenom" placeholder="Prénom">
+    <input id="newNom" placeholder="Nom">
+    <input id="newPassword" placeholder="Mot de passe">
+    <button onclick="createEmployee()">Créer employé</button>
+
+    <ul id="employeeList"></ul>
+
+    <button class="logout" onclick="logout()">Déconnexion</button>
 </div>
 
 <!-- CAISSE -->
-<div id="caisse" class="container hidden">
-    <aside class="categories">
-        <h2>LTD</h2>
-        <p id="employee-name"></p>
-
+<div id="caisse" class="caisse hidden">
+    <aside class="sidebar">
+        <h3 id="employeeName"></h3>
         <button onclick="showCategory('boisson')">Boissons</button>
         <button onclick="showCategory('repas')">Repas</button>
         <button onclick="showCategory('alcool')">Alcool</button>
         <button onclick="showCategory('soft')">Soft</button>
+        <button class="logout" onclick="logout()">Quitter</button>
     </aside>
 
     <main class="products">
-        <h2 id="category-title">Catégorie</h2>
-        <div id="product-list"></div>
+        <h2 id="categoryTitle">Produits</h2>
+        <div id="productList"></div>
     </main>
 
     <aside class="cart">
         <h2>Panier</h2>
-        <ul id="cart-list"></ul>
+        <ul id="cartList"></ul>
         <h3>Total : <span id="total">0</span> $</h3>
         <button class="pay" onclick="pay()">Encaisser</button>
-        <button class="logout" onclick="logout()">Déconnexion</button>
     </aside>
 </div>
 
