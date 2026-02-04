@@ -10,7 +10,6 @@
 
 <!-- ===== LOGIN ===== -->
 <div id="login" class="login-container">
-    <img src="logo.png" class="logo" alt="LTD Portolina">
     <h1>LTD Portolina</h1>
     <input id="loginId" type="text" placeholder="nom.prenom">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
@@ -19,89 +18,52 @@
 
 <!-- ===== PANEL DIRECTION ===== -->
 <div id="direction" class="panel hidden">
-    <header>
-        <h2>Direction LTD Portolina</h2>
-        <button id="btnLogout">Déconnexion</button>
-    </header>
+<header>
+    <h2>Direction LTD Portolina</h2>
+    <button onclick="logout()">Déconnexion</button>
+</header>
 
-    <div class="direction-container">
+<div class="direction-container">
+<aside class="sidebar">
+    <button onclick="showCategory('menu')">📋 Menu</button>
+    <button onclick="showCategory('boisson')">🥤 Boissons</button>
+    <button onclick="showCategory('plat')">🍔 Plats</button>
+    <button onclick="showCategory('stup')">💊 Stup</button>
+    <button onclick="showCategory('soft')">🥤 Soft</button>
+</aside>
 
-        <!-- Sidebar avec onglets -->
-        <aside class="sidebar">
-            <h3>Catégories</h3>
-            <button onclick="showCategory('menu')">📋 Menu</button>
-            <button onclick="showCategory('boisson')">🥤 Boissons</button>
-            <button onclick="showCategory('plat')">🍔 Plats</button>
-            <button onclick="showCategory('stup')">💊 Stupéfiants</button>
-            <button onclick="showCategory('soft')">🥤 Soft</button>
-
-            <hr>
-            <button onclick="showPanel('employees')">👥 Employés</button>
-            <button onclick="showPanel('sales')">💰 Ventes</button>
-            <button onclick="showPanel('stock')">📦 Stock</button>
-        </aside>
-
-        <!-- Main content -->
-        <main id="mainContent">
-            <!-- Produits -->
-            <div id="productsPanel">
-                <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
-                <div id="productList"></div>
-                <aside class="cart">
-                    <h3>Panier</h3>
-                    <ul id="cartList"></ul>
-                    <div>Total : <span id="total">0</span> $</div>
-                    <button onclick="pay()">Encaisser</button>
-                </aside>
-            </div>
-
-            <!-- Employés -->
-            <div id="employeesPanel" class="hidden">
-                <h2>Gestion Employés</h2>
-                <input id="newPrenom" type="text" placeholder="Prénom">
-                <input id="newNom" type="text" placeholder="Nom">
-                <input id="newPassword" type="password" placeholder="Mot de passe">
-                <button onclick="createEmployee()">Créer un employé</button>
-                <ul id="employeeList"></ul>
-            </div>
-
-            <!-- Ventes -->
-            <div id="salesPanel" class="hidden">
-                <h2>Historique des ventes</h2>
-                <ul id="salesList"></ul>
-                <div><strong>Total CA :</strong> <span id="totalCA">0</span> $</div>
-            </div>
-
-            <!-- Stock -->
-            <div id="stockPanel" class="hidden">
-                <h2>Gestion du stock</h2>
-                <ul id="stockList"></ul>
-            </div>
-        </main>
+<main id="productsPanel">
+    <div>
+        <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
+        <div id="productList"></div>
     </div>
+
+    <aside class="cart">
+        <h3>Panier</h3>
+        <ul id="cartList"></ul>
+        <div class="total">Total : <span id="total">0</span> $</div>
+        <button onclick="pay()">Encaisser</button>
+    </aside>
+</main>
+</div>
 </div>
 
 <!-- ===== PANEL EMPLOYÉ ===== -->
 <div id="cashier" class="panel hidden">
-    <aside class="sidebar">
-        <h4>Catégories</h4>
-        <button onclick="showCategory('menu')">📋 Menu</button>
-        <button onclick="showCategory('boisson')">🥤 Boissons</button>
-        <button onclick="showCategory('plat')">🍔 Plats</button>
-        <button onclick="showCategory('stup')">💊 Stupéfiants</button>
-        <button onclick="showCategory('soft')">🥤 Soft</button>
-        <button onclick="logout()">Déconnexion</button>
-    </aside>
-    <main>
+<main class="caisse">
+    <div>
         <h2 id="categoryTitleCashier">Sélectionnez une catégorie</h2>
         <div id="productListCashier"></div>
-        <aside class="cart">
-            <h3>Panier</h3>
-            <ul id="cartListCashier"></ul>
-            <div>Total : <span id="totalCashier">0</span> $</div>
-            <button onclick="payCashier()">Encaisser</button>
-        </aside>
-    </main>
+    </div>
+
+    <aside class="cart">
+        <h3>Panier</h3>
+        <ul id="cartListCashier"></ul>
+        <div class="total">Total : <span id="totalCashier">0</span> $</div>
+        <button onclick="payCashier()">Encaisser</button>
+        <button onclick="logout()">Déconnexion</button>
+    </aside>
+</main>
 </div>
 
 <script src="script.js"></script>
