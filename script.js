@@ -135,3 +135,12 @@ function updateCart() {
         li.innerText = `${i.name} - ${i.price}$`;
         cartList.appendChild(li);
     });
+    totalEl.innerText = totalPrice;
+}
+
+function pay() {
+    alert(`Paiement encaissé : ${totalPrice}$`);
+    cart = [];
+    totalPrice = 0;
+    updateCart();
+}
