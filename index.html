@@ -2,68 +2,83 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LTD Portolina – Caisse</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="login" class="login-container">
     <h1>LTD Portolina</h1>
-    <input id="loginId" type="text" placeholder="nom.prenom">
+    <input id="loginId" placeholder="nom.prenom">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
-    <button id="btnLogin">Connexion</button>
+    <button onclick="login()">Connexion</button>
 </div>
 
-<!-- ===== PANEL DIRECTION ===== -->
-<div id="direction" class="panel hidden">
-<header>
-    <h2>Direction LTD Portolina</h2>
-    <button onclick="logout()">Déconnexion</button>
-</header>
+<!-- APP -->
+<div id="app" class="hidden app">
 
-<div class="direction-container">
-<aside class="sidebar">
-    <button onclick="showCategory('menu')">📋 Menu</button>
-    <button onclick="showCategory('boisson')">🥤 Boissons</button>
-    <button onclick="showCategory('plat')">🍔 Plats</button>
-    <button onclick="showCategory('stup')">💊 Stup</button>
-    <button onclick="showCategory('soft')">🥤 Soft</button>
+<!-- COLONNE GAUCHE -->
+<aside class="left-panel">
+
+    <h3>🐟 Caisse Poisson</h3>
+    <button onclick="showFish()">Accéder</button>
+
+    <hr>
+
+    <h3>👥 Employés</h3>
+    <input id="empPrenom" placeholder="Prénom">
+    <input id="empNom" placeholder="Nom">
+    <select id="empRole">
+        <option>Vendeur apprenti</option>
+        <option>Vendeur confirmé</option>
+        <option>Vendeur expérimenté</option>
+        <option>Responsable logistique</option>
+        <option>RH</option>
+        <option>Co-patron</option>
+        <option>Co-patronne</option>
+        <option>Patronne</option>
+    </select>
+    <button onclick="addEmployee()">Ajouter</button>
+    <ul id="employeeList"></ul>
+
+    <hr>
+
+    <h3>💰 Chiffre d'affaires</h3>
+    <div>Total CA : <strong id="totalCA">0 $</strong></div>
+    <ul id="salesByEmployee"></ul>
+
 </aside>
 
-<main id="productsPanel">
-    <div>
-        <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
-        <div id="productList"></div>
+<!-- ZONE CENTRALE -->
+<main class="center">
+
+<div class="white-box">
+
+    <!-- CATÉGORIES -->
+    <div class="categories">
+        <button onclick="showCategory('menu')">Menu</button>
+        <button onclick="showCategory('collector')">Collector</button>
+        <button onclick="showCategory('boisson')">Boisson</button>
+        <button onclick="showCategory('nourriture')">Nourriture</button>
+        <button onclick="showCategory('fleur')">Fleur</button>
     </div>
 
-    <aside class="cart">
-        <h3>Panier</h3>
-        <ul id="cartList"></ul>
-        <div class="total">Total : <span id="total">0</span> $</div>
-        <button onclick="pay()">Encaisser</button>
-    </aside>
-</main>
-</div>
-</div>
+    <!-- PRODUITS -->
+    <div id="productList" class="products"></div>
 
-<!-- ===== PANEL EMPLOYÉ ===== -->
-<div id="cashier" class="panel hidden">
-<main class="caisse">
-    <div>
-        <h2 id="categoryTitleCashier">Sélectionnez une catégorie</h2>
-        <div id="productListCashier"></div>
-    </div>
-
-    <aside class="cart">
-        <h3>Panier</h3>
-        <ul id="cartListCashier"></ul>
-        <div class="total">Total : <span id="totalCashier">0</span> $</div>
-        <button onclick="payCashier()">Encaisser</button>
-        <button onclick="logout()">Déconnexion</button>
-    </aside>
+</div>
 </main>
+
+<!-- PANIER -->
+<aside class="cart">
+    <h3>Panier</h3>
+    <ul id="cartList"></ul>
+    <div class="total">Total : <span id="total">0</span> $</div>
+    <button onclick="pay()">Encaisser</button>
+    <button onclick="logout()">Déconnexion</button>
+</aside>
+
 </div>
 
 <script src="script.js"></script>
