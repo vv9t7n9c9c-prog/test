@@ -1,116 +1,79 @@
-let users = JSON.parse(localStorage.getItem("ltd_users")) || [
-    {username:"direction.portolina", password:"portolina2026", role:"admin"}
-];
-let sales = [];
-let stock = { menu:50, boisson:50, plat:50, stup:20, soft:50 };
+let employees=[];
+let sales=[];
+let cart=[];
+let total=0;
 
-let session = null;
-let cart = [];
-let cartCashier = [];
-let totalPrice = 0;
-let totalCashier = 0;
-
-const products = {
-    menu:[{name:"Menu Basique", price:20},{name:"Menu VIP", price:50}],
-    boisson:[{name:"Eau", price:5},{name:"Coca", price:8}],
-    plat:[{name:"Burger", price:15},{name:"Pizza", price:20}],
-    stup:[{name:"Substance X", price:100}],
-    soft:[{name:"Jus", price:6},{name:"Thé", price:5}]
+const products={
+    menu:[{n:"Menu Basique",p:20}],
+    collector:[{n:"Collector Gold",p:150}],
+    boisson:[{n:"Eau",p:5}],
+    nourriture:[{n:"Burger",p:15}],
+    fleur:[{n:"Rose",p:25}]
 };
 
-document.getElementById("btnLogin").onclick = login;
-
 function login(){
-    const id = loginId.value.toLowerCase();
-    const pw = loginPassword.value;
-    const user = users.find(u=>u.username===id && u.password===pw);
-    if(!user) return alert("Erreur de connexion");
-    session = user;
     login.classList.add("hidden");
-    user.role==="admin" ? direction.classList.remove("hidden") : cashier.classList.remove("hidden");
+    app.classList.remove("hidden");
 }
 
 function logout(){
-    session=null;
-    cart=[]; cartCashier=[];
-    totalPrice=0; totalCashier=0;
-    updateCart(); updateCartCashier();
-    login.classList.remove("hidden");
-    direction.classList.add("hidden");
-    cashier.classList.add("hidden");
+    location.reload();
 }
 
 function showCategory(cat){
-    categoryTitle.innerText = cat.toUpperCase();
     productList.innerHTML="";
     products[cat].forEach(p=>{
-        productList.innerHTML += `
+        productList.innerHTML+=`
         <div class="product">
-            <span>${p.name} - ${p.price}$</span>
-            <button onclick="addToCart('${p.name}',${p.price})">+</button>
+            <span>${p.n}</span>
+            <button onclick="add('${p.n}',${p.p})">+</button>
         </div>`;
     });
 }
 
-function showCategoryCashier(cat){
-    categoryTitleCashier.innerText = cat.toUpperCase();
-    productListCashier.innerHTML="";
-    products[cat].forEach(p=>{
-        productListCashier.innerHTML += `
-        <div class="product">
-            <span>${p.name} - ${p.price}$</span>
-            <button onclick="addToCartCashier('${p.name}',${p.price})">+</button>
-        </div>`;
-    });
-}
-
-function addToCart(name,price){
+function add(name,price){
     cart.push({name,price});
-    totalPrice+=price;
+    total+=price;
     updateCart();
-}
-
-function addToCartCashier(name,price){
-    cartCashier.push({name,price});
-    totalCashier+=price;
-    updateCartCashier();
-}
-
-function groupItems(list){
-    const grouped={};
-    list.forEach(i=>{
-        if(!grouped[i.name]) grouped[i.name]={qty:0, price:i.price};
-        grouped[i.name].qty++;
-    });
-    return grouped;
 }
 
 function updateCart(){
     cartList.innerHTML="";
-    const g = groupItems(cart);
-    for(let name in g){
-        cartList.innerHTML += `<li>${name} x${g[name].qty}</li>`;
+    const g={};
+    cart.forEach(i=>{
+        if(!g[i.name]) g[i.name]={q:0,p:i.price};
+        g[i.name].q++;
+    });
+    for(let n in g){
+        cartList.innerHTML+=`<li>${n} x${g[n].q}</li>`;
     }
-    total.innerText = totalPrice;
-}
-
-function updateCartCashier(){
-    cartListCashier.innerHTML="";
-    const g = groupItems(cartCashier);
-    for(let name in g){
-        cartListCashier.innerHTML += `<li>${name} x${g[name].qty}</li>`;
-    }
-    totalCashier.innerText = totalCashier;
+    totalSpan.innerText=total;
 }
 
 function pay(){
-    alert("Encaissement : "+totalPrice+"$");
-    cart=[]; totalPrice=0;
+    sales.push(...cart);
+    cart=[];
+    total=0;
     updateCart();
+    updateCA();
 }
 
-function payCashier(){
-    alert("Encaissement : "+totalCashier+"$");
-    cartCashier=[]; totalCashier=0;
-    updateCartCashier();
+function addEmployee(){
+    employees.push({
+        prenom:empPrenom.value,
+        nom:empNom.value,
+        role:empRole.value
+    });
+    renderEmployees();
+}
+
+function renderEmployees(){
+    employeeList.innerHTML="";
+    employees.forEach(e=>{
+        employeeList.innerHTML+=`<li>${e.prenom} ${e.nom} (${e.role})</li>`;
+    });
+}
+
+function updateCA(){
+    totalCA.innerText = sales.reduce((t,s)=>t+s.price,0)+" $";
 }
