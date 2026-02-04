@@ -7,77 +7,78 @@
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="login-container">
+<!-- ===== LOGIN (SEUL ÉCRAN AU DÉPART) ===== -->
+<div id="loginScreen" class="login-container">
     <h1>LTD Portolina</h1>
     <input id="loginId" placeholder="nom.prenom">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
     <button onclick="login()">Connexion</button>
 </div>
 
-<!-- APP -->
-<div id="app" class="hidden app">
+<!-- ===== CAISSE (CACHÉE AVANT LOGIN) ===== -->
+<div id="caisseApp" class="app hidden">
 
-<!-- COLONNE GAUCHE -->
-<aside class="left-panel">
+    <!-- COLONNE GAUCHE -->
+    <aside class="left-panel">
 
-    <h3>🐟 Caisse Poisson</h3>
-    <button onclick="showFish()">Accéder</button>
+        <h3>🐟 Caisse Poisson</h3>
+        <button onclick="alert('Caisse poisson')">Accéder</button>
 
-    <hr>
+        <hr>
 
-    <h3>👥 Employés</h3>
-    <input id="empPrenom" placeholder="Prénom">
-    <input id="empNom" placeholder="Nom">
-    <select id="empRole">
-        <option>Vendeur apprenti</option>
-        <option>Vendeur confirmé</option>
-        <option>Vendeur expérimenté</option>
-        <option>Responsable logistique</option>
-        <option>RH</option>
-        <option>Co-patron</option>
-        <option>Co-patronne</option>
-        <option>Patronne</option>
-    </select>
-    <button onclick="addEmployee()">Ajouter</button>
-    <ul id="employeeList"></ul>
+        <h3>👥 Employés</h3>
+        <input id="empPrenom" placeholder="Prénom">
+        <input id="empNom" placeholder="Nom">
+        <select id="empRole">
+            <option>Vendeur apprenti</option>
+            <option>Vendeur confirmé</option>
+            <option>Vendeur expérimenté</option>
+            <option>Responsable logistique</option>
+            <option>RH</option>
+            <option>Co-patron</option>
+            <option>Co-patronne</option>
+            <option>Patronne</option>
+        </select>
+        <button onclick="addEmployee()">Ajouter</button>
+        <ul id="employeeList"></ul>
 
-    <hr>
+        <hr>
 
-    <h3>💰 Chiffre d'affaires</h3>
-    <div>Total CA : <strong id="totalCA">0 $</strong></div>
-    <ul id="salesByEmployee"></ul>
+        <h3>💰 Chiffre d'affaires</h3>
+        <div>Total CA : <strong id="totalCA">0 $</strong></div>
+        <ul id="salesByEmployee"></ul>
 
-</aside>
+    </aside>
 
-<!-- ZONE CENTRALE -->
-<main class="center">
+    <!-- ZONE CENTRALE -->
+    <main class="center">
 
-<div class="white-box">
+        <div class="white-box">
 
-    <!-- CATÉGORIES -->
-    <div class="categories">
-        <button onclick="showCategory('menu')">Menu</button>
-        <button onclick="showCategory('collector')">Collector</button>
-        <button onclick="showCategory('boisson')">Boisson</button>
-        <button onclick="showCategory('nourriture')">Nourriture</button>
-        <button onclick="showCategory('fleur')">Fleur</button>
-    </div>
+            <!-- CATÉGORIES -->
+            <div class="categories">
+                <button onclick="showCategory('menu')">Menu</button>
+                <button onclick="showCategory('collector')">Collector</button>
+                <button onclick="showCategory('boisson')">Boisson</button>
+                <button onclick="showCategory('nourriture')">Nourriture</button>
+                <button onclick="showCategory('fleur')">Fleur</button>
+            </div>
 
-    <!-- PRODUITS -->
-    <div id="productList" class="products"></div>
+            <!-- PRODUITS -->
+            <div id="productList" class="products"></div>
 
-</div>
-</main>
+        </div>
 
-<!-- PANIER -->
-<aside class="cart">
-    <h3>Panier</h3>
-    <ul id="cartList"></ul>
-    <div class="total">Total : <span id="total">0</span> $</div>
-    <button onclick="pay()">Encaisser</button>
-    <button onclick="logout()">Déconnexion</button>
-</aside>
+    </main>
+
+    <!-- PANIER -->
+    <aside class="cart">
+        <h3>Panier</h3>
+        <ul id="cartList"></ul>
+        <div class="total">Total : <span id="total">0</span> $</div>
+        <button onclick="pay()">Encaisser</button>
+        <button onclick="logout()">Déconnexion</button>
+    </aside>
 
 </div>
 
