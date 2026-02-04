@@ -7,21 +7,20 @@
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- ===== ÉCRAN DE CONNEXION (SEUL AU DÉPART) ===== -->
 <div id="loginScreen" class="login">
     <h1>LTD Portolina</h1>
-    <p>Connexion à la caisse</p>
 
-    <input id="loginUser" placeholder="Identifiant">
-    <input id="loginPass" type="password" placeholder="Mot de passe">
+    <input id="loginName" placeholder="Nom Prénom">
+    <input id="loginPassword" type="password" placeholder="Mot de passe">
 
     <button onclick="login()">Connexion</button>
 </div>
 
-<!-- ===== CAISSE ===== -->
+<!-- ===== CAISSE (CACHÉE AVANT CONNEXION) ===== -->
 <div id="caisseApp" class="app hidden">
 
-    <!-- COLONNE GAUCHE -->
+    <!-- GAUCHE -->
     <aside class="sidebar">
         <h3>Catégories</h3>
         <button onclick="showCategory('menu')">Menu</button>
@@ -30,7 +29,6 @@
         <button onclick="showCategory('fleur')">Fleur</button>
 
         <hr>
-
         <button onclick="logout()">Déconnexion</button>
     </aside>
 
