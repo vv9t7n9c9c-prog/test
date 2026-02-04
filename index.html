@@ -8,69 +8,100 @@
 </head>
 <body>
 
-<!-- ======== LOGIN ======== -->
+<!-- ===== LOGIN ===== -->
 <div id="login" class="login-container">
     <img src="logo.png" class="logo" alt="LTD Portolina">
     <h1>LTD Portolina</h1>
-    <p class="subtitle">Système de caisse interne</p>
-
-    <input id="loginId" type="text" placeholder="nom.prenom" autocomplete="off">
+    <input id="loginId" type="text" placeholder="nom.prenom">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
     <button id="btnLogin">Connexion</button>
-    <p class="hint">Exemple : <strong>dupont.julien</strong></p>
 </div>
 
-<!-- ======== ADMIN (DIRECTION) ======== -->
-<div id="admin" class="panel hidden">
+<!-- ===== PANEL DIRECTION ===== -->
+<div id="direction" class="panel hidden">
     <header>
         <h2>Direction LTD Portolina</h2>
-        <button id="btnLogoutAdmin">Déconnexion</button>
+        <button id="btnLogout">Déconnexion</button>
     </header>
 
-    <section class="admin-section">
-        <div class="card">
-            <h3>Créer un employé</h3>
-            <input id="newPrenom" type="text" placeholder="Prénom">
-            <input id="newNom" type="text" placeholder="Nom">
-            <input id="newPassword" type="password" placeholder="Mot de passe">
-            <button id="btnCreateEmployee">Créer le compte</button>
-            <p class="info">Identifiant auto : <em>nom.prenom</em></p>
-        </div>
+    <div class="direction-container">
 
-        <div class="card">
-            <h3>Employés enregistrés</h3>
-            <ul id="employeeList" class="employee-list"></ul>
-        </div>
-    </section>
+        <!-- Sidebar avec onglets -->
+        <aside class="sidebar">
+            <h3>Catégories</h3>
+            <button onclick="showCategory('menu')">📋 Menu</button>
+            <button onclick="showCategory('boisson')">🥤 Boissons</button>
+            <button onclick="showCategory('plat')">🍔 Plats</button>
+            <button onclick="showCategory('stup')">💊 Stupéfiants</button>
+            <button onclick="showCategory('soft')">🥤 Soft</button>
+
+            <hr>
+            <button onclick="showPanel('employees')">👥 Employés</button>
+            <button onclick="showPanel('sales')">💰 Ventes</button>
+            <button onclick="showPanel('stock')">📦 Stock</button>
+        </aside>
+
+        <!-- Main content -->
+        <main id="mainContent">
+            <!-- Produits -->
+            <div id="productsPanel">
+                <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
+                <div id="productList"></div>
+                <aside class="cart">
+                    <h3>Panier</h3>
+                    <ul id="cartList"></ul>
+                    <div>Total : <span id="total">0</span> $</div>
+                    <button onclick="pay()">Encaisser</button>
+                </aside>
+            </div>
+
+            <!-- Employés -->
+            <div id="employeesPanel" class="hidden">
+                <h2>Gestion Employés</h2>
+                <input id="newPrenom" type="text" placeholder="Prénom">
+                <input id="newNom" type="text" placeholder="Nom">
+                <input id="newPassword" type="password" placeholder="Mot de passe">
+                <button onclick="createEmployee()">Créer un employé</button>
+                <ul id="employeeList"></ul>
+            </div>
+
+            <!-- Ventes -->
+            <div id="salesPanel" class="hidden">
+                <h2>Historique des ventes</h2>
+                <ul id="salesList"></ul>
+                <div><strong>Total CA :</strong> <span id="totalCA">0</span> $</div>
+            </div>
+
+            <!-- Stock -->
+            <div id="stockPanel" class="hidden">
+                <h2>Gestion du stock</h2>
+                <ul id="stockList"></ul>
+            </div>
+        </main>
+    </div>
 </div>
 
-<!-- ======== CAISSE EMPLOYÉ ======== -->
-<div id="caisse" class="panel hidden">
+<!-- ===== PANEL EMPLOYÉ ===== -->
+<div id="cashier" class="panel hidden">
     <aside class="sidebar">
-        <img src="logo.png" class="sidebar-logo" alt="LTD">
-        <p class="employee-name" id="employeeName"></p>
-
         <h4>Catégories</h4>
         <button onclick="showCategory('menu')">📋 Menu</button>
         <button onclick="showCategory('boisson')">🥤 Boissons</button>
         <button onclick="showCategory('plat')">🍔 Plats</button>
         <button onclick="showCategory('stup')">💊 Stupéfiants</button>
         <button onclick="showCategory('soft')">🥤 Soft</button>
-
-        <button id="btnLogoutCashier">Déconnexion</button>
+        <button onclick="logout()">Déconnexion</button>
     </aside>
-
-    <main class="products">
-        <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
-        <div id="productList"></div>
+    <main>
+        <h2 id="categoryTitleCashier">Sélectionnez une catégorie</h2>
+        <div id="productListCashier"></div>
+        <aside class="cart">
+            <h3>Panier</h3>
+            <ul id="cartListCashier"></ul>
+            <div>Total : <span id="totalCashier">0</span> $</div>
+            <button onclick="payCashier()">Encaisser</button>
+        </aside>
     </main>
-
-    <aside class="cart">
-        <h2>Panier</h2>
-        <ul id="cartList"></ul>
-        <div class="total-box">Total : <span id="total">0</span> $</div>
-        <button onclick="pay()">Encaisser</button>
-    </aside>
 </div>
 
 <script src="script.js"></script>
