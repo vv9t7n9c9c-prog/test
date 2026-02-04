@@ -4,7 +4,7 @@ let users = JSON.parse(localStorage.getItem("ltd_users"));
 if (!users) {
     users = [
         {
-            id: "admin",
+            username: "direction.portolina",
             prenom: "Direction",
             nom: "Portolina",
             password: "portolina2026",
@@ -37,14 +37,17 @@ const products = {
     ]
 };
 
-// ================== LOGIN ==================
+// ================== CONNEXION ==================
 function loginUser() {
-    const id = document.getElementById("loginId").value;
+    const username = document.getElementById("loginId").value.toLowerCase();
     const pwd = document.getElementById("loginPassword").value;
 
-    const user = users.find(u => u.id === id && u.password === pwd);
+    const user = users.find(
+        u => u.username === username && u.password === pwd
+    );
+
     if (!user) {
-        alert("Identifiants incorrects");
+        alert("Identifiant ou mot de passe incorrect");
         return;
     }
 
@@ -62,7 +65,7 @@ function loginUser() {
     }
 }
 
-// ================== LOGOUT ==================
+// ================== DÉCONNEXION ==================
 function logout() {
     session = null;
     cart = [];
@@ -76,33 +79,49 @@ function logout() {
 
 // ================== ADMIN ==================
 function createEmployee() {
-    const emp = {
-        id: document.getElementById("newId").value,
-        prenom: document.getElementById("newPrenom").value,
-        nom: document.getElementById("newNom").value,
-        password: document.getElementById("newPassword").value,
-        role: "employee"
-    };
+    const prenom = document.getElementById("newPrenom").value.trim();
+    const nom = document.getElementById("newNom").value.trim();
+    const password = document.getElementById("newPassword").value;
 
-    if (users.find(u => u.id === emp.id)) {
-        alert("ID déjà utilisé");
+    if (!prenom || !nom || !password) {
+        alert("Tous les champs sont obligatoires");
         return;
     }
+
+    const username = `${nom}.${prenom}`.toLowerCase();
+
+    if (users.find(u => u.username === username)) {
+        alert("Cet employé existe déjà");
+        return;
+    }
+
+    const emp = {
+        username,
+        prenom,
+        nom,
+        password,
+        role: "employee"
+    };
 
     users.push(emp);
     localStorage.setItem("ltd_users", JSON.stringify(users));
     loadEmployees();
+
+    alert(`Employé créé : ${username}`);
 }
 
+// ================== LISTE EMPLOYÉS ==================
 function loadEmployees() {
     const list = document.getElementById("employeeList");
     list.innerHTML = "";
 
-    users.filter(u => u.role === "employee").forEach(e => {
-        const li = document.createElement("li");
-        li.innerText = `${e.prenom} ${e.nom} (${e.id})`;
-        list.appendChild(li);
-    });
+    users
+        .filter(u => u.role === "employee")
+        .forEach(e => {
+            const li = document.createElement("li");
+            li.innerText = `${e.prenom} ${e.nom} — ${e.username}`;
+            list.appendChild(li);
+        });
 }
 
 // ================== CAISSE ==================
