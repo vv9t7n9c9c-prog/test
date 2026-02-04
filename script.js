@@ -1,6 +1,5 @@
-// ================== UTILISATEURS ==================
+// ==================== USERS ====================
 let users = JSON.parse(localStorage.getItem("ltd_users"));
-
 if (!users) {
     users = [
         {
@@ -14,130 +13,112 @@ if (!users) {
     localStorage.setItem("ltd_users", JSON.stringify(users));
 }
 
-// ================== VARIABLES ==================
 let session = null;
 let cart = [];
 let totalPrice = 0;
 
-// ================== PRODUITS ==================
 const products = {
-    boisson: [
-        { name: "Eau", price: 5 },
-        { name: "Café", price: 10 }
-    ],
-    repas: [
-        { name: "Sandwich", price: 15 },
-        { name: "Burger", price: 25 }
-    ],
-    alcool: [
-        { name: "Bière", price: 20 }
-    ],
-    soft: [
-        { name: "Cola", price: 8 }
-    ]
+    boisson: [{ name: "Eau", price: 5 }, { name: "Café", price: 10 }],
+    repas: [{ name: "Sandwich", price: 15 }, { name: "Burger", price: 25 }],
+    alcool: [{ name: "Bière", price: 20 }],
+    soft: [{ name: "Cola", price: 8 }]
 };
 
-// ================== CONNEXION ==================
+// ==================== ELEMENTS ====================
+const loginDiv = document.getElementById("login");
+const adminDiv = document.getElementById("admin");
+const caisseDiv = document.getElementById("caisse");
+
+const btnLogin = document.getElementById("btnLogin");
+const btnLogoutAdmin = document.getElementById("btnLogoutAdmin");
+const btnLogoutCashier = document.getElementById("btnLogoutCashier");
+const btnCreateEmployee = document.getElementById("btnCreateEmployee");
+
+const loginId = document.getElementById("loginId");
+const loginPassword = document.getElementById("loginPassword");
+
+const employeeName = document.getElementById("employeeName");
+const employeeList = document.getElementById("employeeList");
+const categoryTitle = document.getElementById("categoryTitle");
+const productList = document.getElementById("productList");
+const cartList = document.getElementById("cartList");
+const totalEl = document.getElementById("total");
+
+// ==================== EVENT LISTENERS ====================
+btnLogin.addEventListener("click", loginUser);
+btnLogoutAdmin.addEventListener("click", logout);
+btnLogoutCashier.addEventListener("click", logout);
+btnCreateEmployee.addEventListener("click", createEmployee);
+
+// ==================== FUNCTIONS ====================
 function loginUser() {
-    const username = document.getElementById("loginId").value.toLowerCase();
-    const pwd = document.getElementById("loginPassword").value;
+    const username = loginId.value.trim().toLowerCase();
+    const password = loginPassword.value;
 
-    const user = users.find(
-        u => u.username === username && u.password === pwd
-    );
-
-    if (!user) {
-        alert("Identifiant ou mot de passe incorrect");
-        return;
-    }
+    const user = users.find(u => u.username === username && u.password === password);
+    if (!user) return alert("Identifiant ou mot de passe incorrect");
 
     session = user;
-
-    document.getElementById("login").classList.add("hidden");
+    loginDiv.classList.add("hidden");
 
     if (user.role === "admin") {
-        document.getElementById("admin").classList.remove("hidden");
+        adminDiv.classList.remove("hidden");
         loadEmployees();
     } else {
-        document.getElementById("caisse").classList.remove("hidden");
-        document.getElementById("employeeName").innerText =
-            `${user.prenom} ${user.nom}`;
+        caisseDiv.classList.remove("hidden");
+        employeeName.innerText = `${user.prenom} ${user.nom}`;
     }
 }
 
-// ================== DÉCONNEXION ==================
 function logout() {
     session = null;
     cart = [];
     totalPrice = 0;
     updateCart();
 
-    document.getElementById("admin").classList.add("hidden");
-    document.getElementById("caisse").classList.add("hidden");
-    document.getElementById("login").classList.remove("hidden");
+    loginDiv.classList.remove("hidden");
+    adminDiv.classList.add("hidden");
+    caisseDiv.classList.add("hidden");
 }
 
-// ================== ADMIN ==================
+// ==================== ADMIN ====================
 function createEmployee() {
     const prenom = document.getElementById("newPrenom").value.trim();
     const nom = document.getElementById("newNom").value.trim();
     const password = document.getElementById("newPassword").value;
 
-    if (!prenom || !nom || !password) {
-        alert("Tous les champs sont obligatoires");
-        return;
-    }
+    if (!prenom || !nom || !password) return alert("Tous les champs sont obligatoires");
 
     const username = `${nom}.${prenom}`.toLowerCase();
 
-    if (users.find(u => u.username === username)) {
-        alert("Cet employé existe déjà");
-        return;
-    }
+    if (users.find(u => u.username === username)) return alert("Cet employé existe déjà");
 
-    const emp = {
-        username,
-        prenom,
-        nom,
-        password,
-        role: "employee"
-    };
-
-    users.push(emp);
+    users.push({ username, prenom, nom, password, role: "employee" });
     localStorage.setItem("ltd_users", JSON.stringify(users));
     loadEmployees();
-
     alert(`Employé créé : ${username}`);
 }
 
-// ================== LISTE EMPLOYÉS ==================
 function loadEmployees() {
-    const list = document.getElementById("employeeList");
-    list.innerHTML = "";
-
-    users
-        .filter(u => u.role === "employee")
-        .forEach(e => {
-            const li = document.createElement("li");
-            li.innerText = `${e.prenom} ${e.nom} — ${e.username}`;
-            list.appendChild(li);
-        });
+    employeeList.innerHTML = "";
+    users.filter(u => u.role === "employee").forEach(e => {
+        const li = document.createElement("li");
+        li.innerText = `${e.prenom} ${e.nom} — ${e.username}`;
+        employeeList.appendChild(li);
+    });
 }
 
-// ================== CAISSE ==================
+// ==================== CAISSE ====================
 function showCategory(cat) {
-    document.getElementById("categoryTitle").innerText = cat.toUpperCase();
-    const list = document.getElementById("productList");
-    list.innerHTML = "";
+    categoryTitle.innerText = cat.toUpperCase();
+    productList.innerHTML = "";
 
     products[cat].forEach(p => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `
-            <span>${p.name} - ${p.price}$</span>
-            <button onclick="addToCart('${p.name}', ${p.price})">+</button>
-        `;
-        list.appendChild(div);
+        div.innerHTML = `<span>${p.name} - ${p.price}$</span>
+        <button onclick="addToCart('${p.name}', ${p.price})">+</button>`;
+        productList.appendChild(div);
     });
 }
 
@@ -148,21 +129,9 @@ function addToCart(name, price) {
 }
 
 function updateCart() {
-    const list = document.getElementById("cartList");
-    list.innerHTML = "";
-
+    cartList.innerHTML = "";
     cart.forEach(i => {
         const li = document.createElement("li");
         li.innerText = `${i.name} - ${i.price}$`;
-        list.appendChild(li);
+        cartList.appendChild(li);
     });
-
-    document.getElementById("total").innerText = totalPrice;
-}
-
-function pay() {
-    alert(`Paiement encaissé : ${totalPrice}$`);
-    cart = [];
-    totalPrice = 0;
-    updateCart();
-}
