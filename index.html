@@ -8,115 +8,50 @@
 </head>
 <body>
 
-<!-- ================= PAGE CONNEXION ================= -->
+<!-- LOGIN -->
 <div id="login" class="login-container">
     <img src="logo.png" class="logo" alt="LTD Portolina">
     <h1>LTD Portolina</h1>
-    <p class="subtitle">Système de caisse interne</p>
+    <p>Système de caisse interne</p>
 
-    <input 
-        id="loginId" 
-        type="text" 
-        placeholder="nom.prenom"
-        autocomplete="off"
-    >
-
-    <input 
-        id="loginPassword" 
-        type="password" 
-        placeholder="Mot de passe"
-    >
-
-    <button onclick="loginUser()">Connexion</button>
-
-    <p class="hint">
-        Identifiant exemple : <strong>dupont.julien</strong>
-    </p>
+    <input id="loginId" type="text" placeholder="nom.prenom" autocomplete="off">
+    <input id="loginPassword" type="password" placeholder="Mot de passe">
+    <button id="btnLogin">Connexion</button>
 </div>
 
-<!-- ================= PANEL DIRECTION ================= -->
+<!-- ADMIN -->
 <div id="admin" class="admin-panel hidden">
-
-    <header class="admin-header">
-        <div class="admin-left">
-            <img src="logo.png" alt="LTD" class="admin-logo">
-            <h2>Direction LTD Portolina</h2>
-        </div>
-        <button class="logout" onclick="logout()">Déconnexion</button>
+    <header>
+        <h2>Direction LTD Portolina</h2>
+        <button id="btnLogoutAdmin">Déconnexion</button>
     </header>
 
-    <section class="admin-content">
-        <div class="admin-card">
-            <h3>Créer un employé</h3>
+    <section>
+        <h3>Créer un employé</h3>
+        <input id="newPrenom" type="text" placeholder="Prénom">
+        <input id="newNom" type="text" placeholder="Nom">
+        <input id="newPassword" type="password" placeholder="Mot de passe">
+        <button id="btnCreateEmployee">Créer le compte</button>
 
-            <input 
-                id="newPrenom" 
-                type="text" 
-                placeholder="Prénom"
-            >
-
-            <input 
-                id="newNom" 
-                type="text" 
-                placeholder="Nom"
-            >
-
-            <input 
-                id="newPassword" 
-                type="password" 
-                placeholder="Mot de passe"
-            >
-
-            <button onclick="createEmployee()">Créer le compte</button>
-
-            <p class="info">
-                Identifiant auto : <em>nom.prenom</em>
-            </p>
-        </div>
-
-        <div class="admin-card">
-            <h3>Employés enregistrés</h3>
-            <ul id="employeeList" class="employee-list"></ul>
-        </div>
+        <h3>Employés</h3>
+        <ul id="employeeList"></ul>
     </section>
 </div>
 
-<!-- ================= CAISSE ================= -->
+<!-- CAISSE -->
 <div id="caisse" class="caisse hidden">
-
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-        <img src="logo.png" class="sidebar-logo" alt="LTD">
-        <p class="employee-name" id="employeeName"></p>
-
+        <p id="employeeName"></p>
         <button onclick="showCategory('boisson')">🥤 Boissons</button>
         <button onclick="showCategory('repas')">🍔 Repas</button>
         <button onclick="showCategory('alcool')">🍺 Alcool</button>
         <button onclick="showCategory('soft')">🥤 Soft</button>
-
-        <button class="logout" onclick="logout()">Quitter</button>
+        <button id="btnLogoutCashier">Déconnexion</button>
     </aside>
 
-    <!-- PRODUITS -->
     <main class="products">
         <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
-        <div id="productList" class="product-list"></div>
+        <div id="productList"></div>
     </main>
 
-    <!-- PANIER -->
-    <aside class="cart">
-        <h2>Panier</h2>
-        <ul id="cartList"></ul>
-
-        <div class="total-box">
-            Total : <span id="total">0</span> $
-        </div>
-
-        <button class="pay" onclick="pay()">Encaisser</button>
-    </aside>
-
-</div>
-
-<script src="script.js"></script>
-</body>
-</html>
+    <aside cla
