@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>LTD Portolina – Caisse</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LTD Portolina – Caisse</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ======== LOGIN ======== -->
 <div id="login" class="login-container">
     <img src="logo.png" class="logo" alt="LTD Portolina">
     <h1>LTD Portolina</h1>
-    <p>Système de caisse interne</p>
+    <p class="subtitle">Système de caisse interne</p>
 
     <input id="loginId" type="text" placeholder="nom.prenom" autocomplete="off">
     <input id="loginPassword" type="password" placeholder="Mot de passe">
     <button id="btnLogin">Connexion</button>
+    <p class="hint">Exemple : <strong>dupont.julien</strong></p>
 </div>
 
-<!-- ADMIN -->
-<div id="admin" class="admin-panel hidden">
+<!-- ======== ADMIN (DIRECTION) ======== -->
+<div id="admin" class="panel hidden">
     <header>
         <h2>Direction LTD Portolina</h2>
         <button id="btnLogoutAdmin">Déconnexion</button>
     </header>
 
-    <section>
-        <h3>Créer un employé</h3>
-        <input id="newPrenom" type="text" placeholder="Prénom">
-        <input id="newNom" type="text" placeholder="Nom">
-        <input id="newPassword" type="password" placeholder="Mot de passe">
-        <button id="btnCreateEmployee">Créer le compte</button>
+    <section class="admin-section">
+        <div class="card">
+            <h3>Créer un employé</h3>
+            <input id="newPrenom" type="text" placeholder="Prénom">
+            <input id="newNom" type="text" placeholder="Nom">
+            <input id="newPassword" type="password" placeholder="Mot de passe">
+            <button id="btnCreateEmployee">Créer le compte</button>
+            <p class="info">Identifiant auto : <em>nom.prenom</em></p>
+        </div>
 
-        <h3>Employés</h3>
-        <ul id="employeeList"></ul>
+        <div class="card">
+            <h3>Employés enregistrés</h3>
+            <ul id="employeeList" class="employee-list"></ul>
+        </div>
     </section>
 </div>
 
-<!-- CAISSE -->
-<div id="caisse" class="caisse hidden">
+<!-- ======== CAISSE EMPLOYÉ ======== -->
+<div id="caisse" class="panel hidden">
     <aside class="sidebar">
-        <p id="employeeName"></p>
+        <img src="logo.png" class="sidebar-logo" alt="LTD">
+        <p class="employee-name" id="employeeName"></p>
+
+        <h4>Catégories</h4>
+        <button onclick="showCategory('menu')">📋 Menu</button>
         <button onclick="showCategory('boisson')">🥤 Boissons</button>
-        <button onclick="showCategory('repas')">🍔 Repas</button>
-        <button onclick="showCategory('alcool')">🍺 Alcool</button>
+        <button onclick="showCategory('plat')">🍔 Plats</button>
+        <button onclick="showCategory('stup')">💊 Stupéfiants</button>
         <button onclick="showCategory('soft')">🥤 Soft</button>
+
         <button id="btnLogoutCashier">Déconnexion</button>
     </aside>
 
@@ -57,7 +68,7 @@
     <aside class="cart">
         <h2>Panier</h2>
         <ul id="cartList"></ul>
-        Total : <span id="total">0</span> $
+        <div class="total-box">Total : <span id="total">0</span> $</div>
         <button onclick="pay()">Encaisser</button>
     </aside>
 </div>
