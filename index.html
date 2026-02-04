@@ -2,48 +2,92 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>LTD Portolina - Caisse</title>
+    <title>LTD Portolina – Caisse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- PAGE CONNEXION -->
+<!-- ================= PAGE CONNEXION ================= -->
 <div id="login" class="login-container">
-    <img src="logo.png" class="logo">
+    <img src="logo.png" class="logo" alt="LTD Portolina">
     <h1>LTD Portolina</h1>
     <p class="subtitle">Système de caisse interne</p>
 
-    <input id="loginId" placeholder="Identifiant">
-    <input id="loginPassword" type="password" placeholder="Mot de passe">
-    <button onclick="login()">Connexion</button>
+    <input 
+        id="loginId" 
+        type="text" 
+        placeholder="nom.prenom"
+        autocomplete="off"
+    >
+
+    <input 
+        id="loginPassword" 
+        type="password" 
+        placeholder="Mot de passe"
+    >
+
+    <button onclick="loginUser()">Connexion</button>
+
+    <p class="hint">
+        Identifiant exemple : <strong>dupont.julien</strong>
+    </p>
 </div>
 
-<!-- PANEL DIRECTION -->
+<!-- ================= PANEL DIRECTION ================= -->
 <div id="admin" class="admin-panel hidden">
-    <header>
-        <img src="logo.png">
-        <h2>Direction LTD</h2>
-        <button onclick="logout()">Déconnexion</button>
+
+    <header class="admin-header">
+        <div class="admin-left">
+            <img src="logo.png" alt="LTD" class="admin-logo">
+            <h2>Direction LTD Portolina</h2>
+        </div>
+        <button class="logout" onclick="logout()">Déconnexion</button>
     </header>
 
     <section class="admin-content">
-        <h3>Créer un employé</h3>
-        <input id="newId" placeholder="ID joueur">
-        <input id="newPrenom" placeholder="Prénom">
-        <input id="newNom" placeholder="Nom">
-        <input id="newPassword" placeholder="Mot de passe">
-        <button onclick="createEmployee()">Créer</button>
+        <div class="admin-card">
+            <h3>Créer un employé</h3>
 
-        <h3>Employés enregistrés</h3>
-        <ul id="employeeList"></ul>
+            <input 
+                id="newPrenom" 
+                type="text" 
+                placeholder="Prénom"
+            >
+
+            <input 
+                id="newNom" 
+                type="text" 
+                placeholder="Nom"
+            >
+
+            <input 
+                id="newPassword" 
+                type="password" 
+                placeholder="Mot de passe"
+            >
+
+            <button onclick="createEmployee()">Créer le compte</button>
+
+            <p class="info">
+                Identifiant auto : <em>nom.prenom</em>
+            </p>
+        </div>
+
+        <div class="admin-card">
+            <h3>Employés enregistrés</h3>
+            <ul id="employeeList" class="employee-list"></ul>
+        </div>
     </section>
 </div>
 
-<!-- CAISSE -->
+<!-- ================= CAISSE ================= -->
 <div id="caisse" class="caisse hidden">
+
+    <!-- SIDEBAR -->
     <aside class="sidebar">
-        <img src="logo.png" class="sidebar-logo">
-        <p id="employeeName"></p>
+        <img src="logo.png" class="sidebar-logo" alt="LTD">
+        <p class="employee-name" id="employeeName"></p>
 
         <button onclick="showCategory('boisson')">🥤 Boissons</button>
         <button onclick="showCategory('repas')">🍔 Repas</button>
@@ -53,17 +97,24 @@
         <button class="logout" onclick="logout()">Quitter</button>
     </aside>
 
+    <!-- PRODUITS -->
     <main class="products">
         <h2 id="categoryTitle">Sélectionnez une catégorie</h2>
-        <div id="productList"></div>
+        <div id="productList" class="product-list"></div>
     </main>
 
+    <!-- PANIER -->
     <aside class="cart">
         <h2>Panier</h2>
         <ul id="cartList"></ul>
-        <h3>Total : <span id="total">0</span> $</h3>
+
+        <div class="total-box">
+            Total : <span id="total">0</span> $
+        </div>
+
         <button class="pay" onclick="pay()">Encaisser</button>
     </aside>
+
 </div>
 
 <script src="script.js"></script>
