@@ -1,5 +1,11 @@
 let users = JSON.parse(localStorage.getItem("ltd_users")) || [
-    { id: "boss", prenom: "Patron", nom: "LTD", password: "admin", role: "admin" }
+    {
+        id: "admin",
+        prenom: "Direction",
+        nom: "Portolina",
+        password: "portolina2026",
+        role: "admin"
+    }
 ];
 
 let session = null;
@@ -13,7 +19,6 @@ const products = {
     soft: [{ name: "Cola", price: 8 }]
 };
 
-// ---------- AUTH ----------
 function login() {
     const id = loginId.value;
     const pwd = loginPassword.value;
@@ -22,13 +27,13 @@ function login() {
     if (!user) return alert("Identifiants invalides");
 
     session = user;
-    document.getElementById("login").classList.add("hidden");
+    login.classList.add("hidden");
 
     if (user.role === "admin") {
-        document.getElementById("admin").classList.remove("hidden");
+        admin.classList.remove("hidden");
         loadEmployees();
     } else {
-        document.getElementById("caisse").classList.remove("hidden");
+        caisse.classList.remove("hidden");
         employeeName.innerText = `${user.prenom} ${user.nom}`;
     }
 }
@@ -37,11 +42,10 @@ function logout() {
     session = null;
     cart = [];
     total = 0;
-    document.querySelectorAll(".card, .caisse").forEach(e => e.classList.add("hidden"));
+    document.querySelectorAll(".admin-panel, .caisse").forEach(e => e.classList.add("hidden"));
     document.getElementById("login").classList.remove("hidden");
 }
 
-// ---------- ADMIN ----------
 function createEmployee() {
     const emp = {
         id: newId.value,
@@ -50,8 +54,6 @@ function createEmployee() {
         password: newPassword.value,
         role: "employee"
     };
-
-    if (users.find(u => u.id === emp.id)) return alert("ID déjà utilisé");
 
     users.push(emp);
     localStorage.setItem("ltd_users", JSON.stringify(users));
@@ -67,7 +69,6 @@ function loadEmployees() {
     });
 }
 
-// ---------- CAISSE ----------
 function showCategory(cat) {
     categoryTitle.innerText = cat.toUpperCase();
     productList.innerHTML = "";
@@ -75,7 +76,7 @@ function showCategory(cat) {
     products[cat].forEach(p => {
         const div = document.createElement("div");
         div.className = "product";
-        div.innerHTML = `<span>${p.name} - ${p.price}$</span>
+        div.innerHTML = `${p.name} - ${p.price}$ 
             <button onclick="addToCart('${p.name}', ${p.price})">+</button>`;
         productList.appendChild(div);
     });
@@ -94,11 +95,11 @@ function updateCart() {
         li.innerText = `${i.name} - ${i.price}$`;
         cartList.appendChild(li);
     });
-    document.getElementById("total").innerText = total;
+    total.innerText = total;
 }
 
 function pay() {
-    alert(`Paiement ${total}$ encaissé`);
+    alert(`Paiement encaissé : ${total}$`);
     cart = [];
     total = 0;
     updateCart();
