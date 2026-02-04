@@ -1,0 +1,29 @@
+.hidden {
+    display: none;
+}
+
+.login-box {
+    width: 300px;
+    margin: 100px auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.logout {
+    background: #555;
+    margin-top: 10px;
+}
